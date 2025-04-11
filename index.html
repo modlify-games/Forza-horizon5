@@ -201,6 +201,61 @@
             font-size: 0.8rem;
         }
 
+        /* Installation Guide Styles */
+        .installation {
+            margin: 20px 0;
+        }
+
+        .installation h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .install-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .install-tab {
+            padding: 8px 16px;
+            background: var(--dark);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .install-tab.active {
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        .install-content {
+            background: var(--dark);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .install-steps {
+            list-style: none;
+        }
+
+        .install-steps li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+            font-size: 0.9rem;
+        }
+
+        .install-steps li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
         .features {
             margin: 20px 0;
         }
@@ -352,6 +407,10 @@
                 width: 100%;
                 justify-content: center;
             }
+
+            .install-tabs {
+                flex-direction: column;
+            }
         }
 
         /* Cookie Consent Styles */
@@ -493,6 +552,26 @@
             </div>
         </div>
 
+        <!-- Installation Guide -->
+        <div class="installation">
+            <h2>Installation Guide</h2>
+            <div class="install-tabs">
+                <div class="install-tab active">Android</div>
+                <div class="install-tab">iOS</div>
+            </div>
+            <div class="install-content">
+                <ul class="install-steps">
+                    <li>Download the APK file for Android or IPA file for iOS</li>
+                    <li>Enable "Install from Unknown Sources" in your device settings (Android only)</li>
+                    <li>Open the downloaded file</li>
+                    <li>Follow the installation prompts</li>
+                    <li>Once installed, launch the game</li>
+                    <li>Wait for additional resources to download</li>
+                    <li>Enjoy your game!</li>
+                </ul>
+            </div>
+        </div>
+
         <!-- Features Section -->
         <div class="features">
             <h2>Features</h2>
@@ -625,6 +704,41 @@
                 const x = e.pageX - screenshotGrid.offsetLeft;
                 const walk = (x - startX) * 2;
                 screenshotGrid.scrollLeft = scrollLeft - walk;
+            });
+
+            // Installation Guide Tabs
+            const tabs = document.querySelectorAll('.install-tab');
+            const content = document.querySelector('.install-content');
+
+            const androidSteps = `
+                <ul class="install-steps">
+                    <li>Download the APK file for Android</li>
+                    <li>Enable "Install from Unknown Sources" in your device settings</li>
+                    <li>Open the downloaded file</li>
+                    <li>Follow the installation prompts</li>
+                    <li>Once installed, launch the game</li>
+                    <li>Wait for additional resources to download</li>
+                    <li>Enjoy your game!</li>
+                </ul>
+            `;
+
+            const iosSteps = `
+                <ul class="install-steps">
+                    <li>Download the IPA file for iOS</li>
+                    <li>Install using a trusted third-party app (e.g., AltStore)</li>
+                    <li>Trust the developer profile in Settings</li>
+                    <li>Launch the game</li>
+                    <li>Wait for additional resources to download</li>
+                    <li>Enjoy your game!</li>
+                </ul>
+            `;
+
+            tabs.forEach((tab, index) => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    content.innerHTML = index === 0 ? androidSteps : iosSteps;
+                });
             });
         });
 
